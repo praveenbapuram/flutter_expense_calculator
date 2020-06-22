@@ -21,26 +21,27 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Flutter APP')),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Card(
-                child: Container(
-                  width: double.infinity,
-                  child: Text(
-                    "This is Chart Holder",
-                    style: TextStyle(fontSize: 20),
-                  ),
+      appBar: AppBar(title: Text('Flutter APP')),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Card(
+              child: Container(
+                width: double.infinity,
+                child: Text(
+                  "This is Chart Holder",
+                  style: TextStyle(fontSize: 20),
                 ),
-                color: Colors.blue,
-                elevation: 5,
               ),
-              UserTransactions()
-            ],
-          ),
-        ));
+              color: Colors.blue,
+              elevation: 5,
+            ),
+            UserTransactions()
+          ],
+        ),
+      ),
+    );
   }
 }
