@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'transaction.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_expense_calculator/widgets/new_transaction.dart';
+import 'package:flutter_expense_calculator/widgets/user_transactions.dart';
+import './widgets/transaction_list.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,125 +18,29 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final List<Transaction> transctions = [
-    Transaction(id: 't1', tittle: 'shoes', amount: 69.99, date: DateTime.now()),
-    Transaction(
-        id: 't2', tittle: 'groceries', amount: 16.53, date: DateTime.now()),
-    Transaction(id: 't3', tittle: 'shoes', amount: 69.99, date: DateTime.now()),
-    Transaction(id: 't4', tittle: 'shoes', amount: 69.99, date: DateTime.now()),
-  ];
-
- /* String tittle;
-  String amount;*/
-  final amountController=TextEditingController();
-  final tittleController=TextEditingController(;)
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Flutter APP')),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Card(
-              child: Container(
-                width: double.infinity,
-                child: Text(
-                  "This is Chart Holder",
-                  style: TextStyle(fontSize: 20),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Card(
+                child: Container(
+                  width: double.infinity,
+                  child: Text(
+                    "This is Chart Holder",
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
+                color: Colors.blue,
+                elevation: 5,
               ),
-              color: Colors.blue,
-              elevation: 5,
-            ),
-            Card(
-              elevation: 5,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        TextField(
-                          decoration: InputDecoration(labelText: 'Amount'),
-                         /* onChanged: (val) {
-                            this.amount = val;
-                          }*/
-                          controller: amountController,
-                        ),
-                        TextField(
-                          decoration: InputDecoration(labelText: 'Tittle'),
-                          /*onChanged: (val) {
-                            this.tittle = val;
-                          }*/
-                          controller: tittleController,
-                        ),
-                        FlatButton(
-                          child: Text("Add Transaction"),
-                          textColor: Colors.purple,
-                          onPressed: () {
-                            print('Amount : ' + this.amountController.text);
-                            print('Tittle : ' + this.tittleController.text);
-                          },
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Card(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    ...transctions
-                        .map((tx) => Card(
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    child: Text(
-                                      '\$ ${tx.amount}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: Colors.purple),
-                                    ),
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 5, vertical: 10),
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                      color: Colors.purple,
-                                      width: 2,
-                                    )),
-                                    padding: EdgeInsets.all(10),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        tx.tittle,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        DateFormat('yyyy-MM-dd')
-                                            .format(tx.date),
-                                        style: TextStyle(color: Colors.grey),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ))
-                        .toList()
-                  ],
-                ),
-              ),
-            )
-          ],
+              UserTransactions()
+            ],
+          ),
         ));
   }
 }
