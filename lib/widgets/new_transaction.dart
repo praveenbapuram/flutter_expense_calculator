@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
-  final amountController = TextEditingController();
-  final tittleController = TextEditingController();
-
+class NewTransaction extends StatefulWidget {
   final Function addTxnHandler;
 
   NewTransaction(this.addTxnHandler);
 
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final amountController = TextEditingController();
+
+  final tittleController = TextEditingController();
+
   void submitTransaction() {
-    addTxnHandler(this.tittleController.text, double.parse(this.amountController.text));
+    widget.addTxnHandler(this.tittleController.text, double.parse(this.amountController.text));
     print('Amount : ' + this.amountController.text);
     print('Tittle : ' + this.tittleController.text);
+
+   Navigator.of(context).pop();
   }
 
   @override

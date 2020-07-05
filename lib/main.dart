@@ -12,7 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Flutter App",
+      title: "Personal Expences",
+      theme: ThemeData(
+       // primaryColor : Colors.red  this is fixed colour but the primaryswatch generates the many varients.
+       primarySwatch: Colors.green,
+       accentColor: Colors.amber
+      ),
       home: MyHomePage(),
     );
   }
@@ -24,6 +29,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  
   void _addNewTransaction(String txTittle, double txnAmount) {
     final newTxn = new Transaction(
         id: DateTime.now().toString(),
@@ -49,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return GestureDetector(
             onTap: () {},
             child: NewTransaction(_addNewTransaction),
+            behavior: HitTestBehavior.opaque,
           );
         });
   }
@@ -57,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter APP'),
+        title: Text('Personal Expences'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
