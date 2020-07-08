@@ -14,10 +14,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Personal Expences",
       theme: ThemeData(
-       // primaryColor : Colors.red  this is fixed colour but the primaryswatch generates the many varients.
-       primarySwatch: Colors.green,
-       accentColor: Colors.amber
-      ),
+          // primaryColor : Colors.red  this is fixed colour but the primaryswatch generates the many varients.
+          primarySwatch: Colors.purple,
+          accentColor: Colors.purple,
+          fontFamily: 'QuickSand',
+          textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal)),
+          appBarTheme: AppBarTheme(
+              textTheme: ThemeData.light().textTheme.copyWith(
+                  headline6: TextStyle(
+                      fontFamily: 'OpenSans',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold)))),
       home: MyHomePage(),
     );
   }
@@ -29,7 +40,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
   void _addNewTransaction(String txTittle, double txnAmount) {
     final newTxn = new Transaction(
         id: DateTime.now().toString(),
