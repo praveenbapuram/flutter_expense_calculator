@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           // primaryColor : Colors.red  this is fixed colour but the primaryswatch generates the many varients.
           primarySwatch: Colors.purple,
-          accentColor: Colors.purple,
+          accentColor: Colors.amber,
           fontFamily: 'QuickSand',
           textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
