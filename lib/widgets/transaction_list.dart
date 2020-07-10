@@ -32,40 +32,23 @@ class TransactionList extends StatelessWidget {
             : ListView.builder(
                 itemBuilder: (ctx, index) {
                   return Card(
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          child: Text(
-                            '\$ ${transctions[index].amount.toStringAsFixed(2)}',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Theme.of(context).primaryColor),
-                          ),
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                            color: Theme.of(context).primaryColor,
-                            width: 2,
-                          )),
-                          padding: EdgeInsets.all(10),
+                    elevation: 5,
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: FittedBox(
+                              child: Text('\$${transctions[index].amount}')),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              transctions[index].tittle,
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            Text(
-                              DateFormat('yyyy-MM-dd')
-                                  .format(transctions[index].date),
-                              style: TextStyle(color: Colors.grey),
-                            )
-                          ],
-                        )
-                      ],
+                      ),
+                      title: Text(
+                        transctions[index].tittle,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      subtitle: Text(
+                          DateFormat.yMMMd().format(transctions[index].date)),
                     ),
                   );
                 },
