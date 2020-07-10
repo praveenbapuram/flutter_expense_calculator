@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_expense_calculator/widgets/chart.dart';
 import 'package:flutter_expense_calculator/widgets/new_transaction.dart';
 import 'package:flutter_expense_calculator/widgets/transaction_list.dart';
 
@@ -52,6 +53,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  List<Transaction> get _recentTransactions {
+    return _usertransctions.where((txn) {
+      return txn.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+
   final List<Transaction> _usertransctions = [
     Transaction(id: 't1', tittle: 'shoes', amount: 69.99, date: DateTime.now()),
     Transaction(
@@ -89,16 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Card(
-              child: Container(
-                width: double.infinity,
-                child: Text(
-                  "This is Chart Holder",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-              color: Colors.blue,
-              elevation: 5,
+            Chart(
+              recentTransactions: _recentTransactions,
             ),
             TransactionList(_usertransctions)
           ],
