@@ -60,9 +60,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final List<Transaction> _usertransctions = [
-    Transaction(id: 't1', tittle: 'shoes', amount: 69.99, date: DateTime.now()),
     Transaction(
-        id: 't2', tittle: 'groceries', amount: 16.53, date: DateTime.now()),
+        id: 't1',
+        tittle: 'shoes',
+        amount: 69.99,
+        date: DateTime.now().subtract(Duration(days: 2))),
+    Transaction(
+        id: 't2',
+        tittle: 'groceries',
+        amount: 16.53,
+        date: DateTime.now().subtract(Duration(days: 1))),
   ];
 
   void _startAddNewTransaction(BuildContext ctx) {
