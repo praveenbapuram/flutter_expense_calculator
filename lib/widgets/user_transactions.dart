@@ -13,14 +13,14 @@ class _UserTransactionsState extends State<UserTransactions> {
 
   Function _addNewTransaction;
 
-  
+  Function _deleteTxn;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         NewTransaction(_addNewTransaction),
-        TransactionList(_usertransctions)
+        TransactionList(_usertransctions, _deleteTxn)
       ],
     );
   }
