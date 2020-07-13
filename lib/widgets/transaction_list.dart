@@ -9,6 +9,7 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     return transctions.isEmpty
         ? LayoutBuilder(
             builder: (ctx, constraints) {
@@ -53,7 +54,7 @@ class TransactionList extends StatelessWidget {
                   subtitle: Text(
                     DateFormat.yMMMd().format(transctions[index].date),
                   ),
-                  trailing: MediaQuery.of(context).size.width > 500
+                  trailing: mediaQuery.size.width > 500
                       ? FlatButton.icon(
                           icon: Icon(Icons.delete),
                           textColor: Theme.of(context).errorColor,
