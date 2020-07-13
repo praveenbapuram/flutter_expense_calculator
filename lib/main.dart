@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_expense_calculator/widgets/chart.dart';
 import 'package:flutter_expense_calculator/widgets/new_transaction.dart';
 import 'package:flutter_expense_calculator/widgets/transaction_list.dart';
@@ -6,6 +7,11 @@ import 'package:flutter_expense_calculator/widgets/transaction_list.dart';
 import 'models/transaction.dart';
 
 void main() {
+  /*WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);*/
   runApp(MyApp());
 }
 
@@ -95,29 +101,60 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  var _showChart = true;
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text('Personal Expences'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () {
+            _startAddNewTransaction(context);
+          },
+        )
+      ],
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Personal Expences'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              _startAddNewTransaction(context);
-            },
-          )
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(
-              recentTransactions: _recentTransactions,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Show Chart',
+                ),
+                Switch(
+                    value: _showChart,
+                    onChanged: (val) {
+                      setState(() {
+                        _showChart = val;
+                      });
+                    })
+              ],
             ),
-            TransactionList(_usertransctions, _deleteTransaction)
+            _showChart
+                ? Container(
+                    height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.7,
+                    child: Chart(
+                      recentTransactions: _recentTransactions,
+                    ),
+                  )
+                : Container(
+                    height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.7,
+                    child:
+                        TransactionList(_usertransctions, _deleteTransaction))
           ],
         ),
       ),
