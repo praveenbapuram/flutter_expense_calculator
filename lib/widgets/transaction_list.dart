@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'transaction_item.dart';
 import '../models/transaction.dart';
 import 'package:intl/intl.dart';
 
@@ -36,43 +37,10 @@ class TransactionList extends StatelessWidget {
           )
         : ListView.builder(
             itemBuilder: (ctx, index) {
-              return Card(
-                elevation: 5,
-                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    child: Padding(
-                      padding: const EdgeInsets.all(6),
-                      child: FittedBox(
-                          child: Text('\$${transctions[index].amount}')),
-                    ),
-                  ),
-                  title: Text(
-                    transctions[index].tittle,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  subtitle: Text(
-                    DateFormat.yMMMd().format(transctions[index].date),
-                  ),
-                  trailing: mediaQuery.size.width > 500
-                      ? FlatButton.icon(
-                          icon: const Icon(Icons.delete),
-                          textColor: Theme.of(context).errorColor,
-                          label: const Text('Delete'),
-                          onPressed: () {
-                            deleteTx(transctions[index].id);
-                          },
-                        )
-                      : IconButton(
-                          icon: const Icon(Icons.delete),
-                          color: Theme.of(context).errorColor,
-                          onPressed: () {
-                            deleteTx(transctions[index].id);
-                          },
-                        ),
-                ),
-              );
+              return TransactionItem(
+                  transction: transctions[index],
+                  mediaQuery: mediaQuery,
+                  deleteTx: deleteTx);
             },
             itemCount: transctions.length,
           );
