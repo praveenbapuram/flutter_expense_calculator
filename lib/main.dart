@@ -104,12 +104,45 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  Widget buildLanscapeContent() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'Show Chart',
+        ),
+        Switch.adaptive(
+            value: _showChart,
+            activeColor: Theme.of(context).accentColor,
+            onChanged: (val) {
+              setState(() {
+                _showChart = val;
+              });
+            })
+      ],
+    );
+  }
+
+  Widget buildPotraitContent(MediaQueryData mediaQueryDate, AppBar appBar) {
+    return Container(
+      height: (mediaQueryDate.size.height -
+              appBar.preferredSize.height -
+              MediaQuery.of(context).padding.top) *
+          0.3,
+      child: Chart(
+        recentTransactions: _recentTransactions,
+      ),
+    );
+  }
+
   var _showChart = true;
   @override
   Widget build(BuildContext context) {
     print('build MyHome page');
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
+
+    final mediaQuery = MediaQuery.of(context);
     final PreferredSizeWidget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
             middle: Text('Personal Expences'),
@@ -149,40 +182,15 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            if (isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Show Chart',
-                  ),
-                  Switch.adaptive(
-                      value: _showChart,
-                      activeColor: Theme.of(context).accentColor,
-                      onChanged: (val) {
-                        setState(() {
-                          _showChart = val;
-                        });
-                      })
-                ],
-              ),
-            if (!isLandscape)
-              Container(
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.3,
-                child: Chart(
-                  recentTransactions: _recentTransactions,
-                ),
-              ),
+            if (isLandscape) buildLanscapeContent(),
+            if (!isLandscape) buildPotraitContent(mediaQuery, appBar),
             if (!isLandscape) txnListWidget,
             if (isLandscape)
               _showChart
                   ? Container(
-                      height: (MediaQuery.of(context).size.height -
+                      height: (mediaQuery.size.height -
                               appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
+                              mediaQuery.padding.top) *
                           0.7,
                       child: Chart(
                         recentTransactions: _recentTransactions,
