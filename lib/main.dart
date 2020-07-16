@@ -107,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var _showChart = true;
   @override
   Widget build(BuildContext context) {
+    print('build MyHome page');
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
     final PreferredSizeWidget appBar = Platform.isIOS

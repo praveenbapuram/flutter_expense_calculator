@@ -36,6 +36,7 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('build chart');
     print(groupTransactionValues);
     return Card(
       elevation: 6,

@@ -52,6 +52,7 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
+    print('build new_transaction');
     return SingleChildScrollView(
       child: Card(
         elevation: 5,
