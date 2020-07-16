@@ -123,16 +123,20 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildPotraitContent(MediaQueryData mediaQueryDate, AppBar appBar) {
-    return Container(
-      height: (mediaQueryDate.size.height -
-              appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top) *
-          0.3,
-      child: Chart(
-        recentTransactions: _recentTransactions,
+  List<Widget> buildPotraitContent(
+      MediaQueryData mediaQueryDate, AppBar appBar, Widget txnListWidget) {
+    return [
+      Container(
+        height: (mediaQueryDate.size.height -
+                appBar.preferredSize.height -
+                MediaQuery.of(context).padding.top) *
+            0.3,
+        child: Chart(
+          recentTransactions: _recentTransactions,
+        ),
       ),
-    );
+      txnListWidget
+    ];
   }
 
   var _showChart = true;
@@ -183,8 +187,8 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             if (isLandscape) buildLanscapeContent(),
-            if (!isLandscape) buildPotraitContent(mediaQuery, appBar),
-            if (!isLandscape) txnListWidget,
+            if (!isLandscape)
+              ...buildPotraitContent(mediaQuery, appBar, txnListWidget),
             if (isLandscape)
               _showChart
                   ? Container(
