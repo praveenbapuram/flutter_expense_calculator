@@ -46,12 +46,32 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatefulWidget with WidgetsBindingObserver {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state); // TODO: implement didChangeAppLifecycleState
+    // super.didChangeAppLifecycleState(state);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    WidgetsBinding.instance.removeObserver(this); // to remove all teh observers
+    super.dispose();
+  }
+
   void _addNewTransaction(
       String txTittle, double txnAmount, DateTime chosenDate) {
     final newTxn = new Transaction(
@@ -104,23 +124,37 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  Widget buildLanscapeContent() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          'Show Chart',
-        ),
-        Switch.adaptive(
-            value: _showChart,
-            activeColor: Theme.of(context).accentColor,
-            onChanged: (val) {
-              setState(() {
-                _showChart = val;
-              });
-            })
-      ],
-    );
+  List<Widget> buildLanscapeContent(bool _showChart, MediaQueryData mediaQuery,
+      AppBar appBar, Widget txnListWidget) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'Show Chart',
+          ),
+          Switch.adaptive(
+              value: _showChart,
+              activeColor: Theme.of(context).accentColor,
+              onChanged: (val) {
+                setState(() {
+                  _showChart = val;
+                });
+              })
+        ],
+      ),
+      _showChart
+          ? Container(
+              height: (mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.7,
+              child: Chart(
+                recentTransactions: _recentTransactions,
+              ),
+            )
+          : txnListWidget
+    ];
   }
 
   List<Widget> buildPotraitContent(
@@ -186,21 +220,11 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            if (isLandscape) buildLanscapeContent(),
+            if (isLandscape)
+              ...buildLanscapeContent(
+                  _showChart, mediaQuery, appBar, txnListWidget),
             if (!isLandscape)
               ...buildPotraitContent(mediaQuery, appBar, txnListWidget),
-            if (isLandscape)
-              _showChart
-                  ? Container(
-                      height: (mediaQuery.size.height -
-                              appBar.preferredSize.height -
-                              mediaQuery.padding.top) *
-                          0.7,
-                      child: Chart(
-                        recentTransactions: _recentTransactions,
-                      ),
-                    )
-                  : txnListWidget
           ],
         ),
       ),

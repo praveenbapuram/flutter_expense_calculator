@@ -8,13 +8,43 @@ import 'package:flutter/cupertino.dart';
 class NewTransaction extends StatefulWidget {
   final Function addTxnHandler;
 
-  NewTransaction(this.addTxnHandler);
+  NewTransaction(this.addTxnHandler) {
+    print('NewTransaction widget COnstructer is called.');
+  }
 
   @override
-  _NewTransactionState createState() => _NewTransactionState();
+  _NewTransactionState createState() {
+    print('NewTransaction createState is called..');
+    return _NewTransactionState();
+  }
 }
 
 class _NewTransactionState extends State<NewTransaction> {
+  _NewTransactionState() {
+    print('_NewTransactionState constructer..');
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('_NewTransactionState initState method..');
+  }
+
+  @override
+  void didUpdateWidget(NewTransaction oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    print('_NewTransactionState didUpdateWidget method..');
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print('_NewTransactionState dispose method..');
+  }
+
   final _amountController = TextEditingController();
 
   final _tittleController = TextEditingController();
